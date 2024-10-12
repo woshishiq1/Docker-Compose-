@@ -420,6 +420,8 @@ function ConfigureImageAccelerator() {
 function DockerCompose() {
     if [ ${DOCKER_COMPOSE} == "True" ]; then
         [ -e $DockerCompose ] && rm -rf $DockerCompose
+
+        # 检查架构
         if [ ${Arch} = "x86_64" ]; then
             echo -e ''
             if [ ${DOCKER_COMPOSE_DOWNLOAD_PROXY} = "True" ]; then
@@ -428,7 +430,15 @@ function DockerCompose() {
                 curl -L ${DOCKER_COMPOSE_DOWNLOAD_URL} -o $DockerCompose
             fi
             chmod +x $DockerCompose
-        elif [ ${Arch} = "arm32" ]; then
+        elif [ ${Arch} = "armv7" ]; then
+            echo -e '\n[*] 正在安装适用于 armv7 的 Docker Compose ......\n'
+            if [ ${DOCKER_COMPOSE_DOWNLOAD_PROXY} = "True" ]; then
+                curl -L ${PROXY_URL}${DOCKER_COMPOSE_ARM_DOWNLOAD_URL} -o $DockerCompose
+            else
+                curl -L ${DOCKER_COMPOSE_ARM_DOWNLOAD_URL} -o $DockerCompose
+            fi
+            chmod +x $DockerCompose
+        else
             echo -e '\n[*] 正在通过 pip 安装 Docker Compose ......\n'
             if [ ${SYSTEM_FACTIONS} = ${SYSTEM_DEBIAN} ]; then
                 apt-get install -y python3-pip python3-dev gcc libffi-dev openssl >/dev/null 2>&1
@@ -442,8 +452,6 @@ function DockerCompose() {
                 pip3 install docker-compose
             fi
             [ $? -ne 0 ] && echo -e "\n\033[31m---------- Docker Compose 安装失败，检测到当前处理器为 ${Arch} 架构无法保证 100% 安装成功，自行查看 pip 报错原因 ----------\033[0m\n"
-        else
-            echo -e "\n\033[33m---------- 未识别的架构：${Arch} ----------\033[0m\n"
         fi
         echo -e ''
     else
