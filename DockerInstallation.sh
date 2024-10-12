@@ -428,7 +428,7 @@ function DockerCompose() {
                 curl -L ${DOCKER_COMPOSE_DOWNLOAD_URL} -o $DockerCompose
             fi
             chmod +x $DockerCompose
-        else
+        elif [ ${Arch} = "arm32" ]; then
             echo -e '\n[*] 正在通过 pip 安装 Docker Compose ......\n'
             if [ ${SYSTEM_FACTIONS} = ${SYSTEM_DEBIAN} ]; then
                 apt-get install -y python3-pip python3-dev gcc libffi-dev openssl >/dev/null 2>&1
@@ -442,6 +442,8 @@ function DockerCompose() {
                 pip3 install docker-compose
             fi
             [ $? -ne 0 ] && echo -e "\n\033[31m---------- Docker Compose 安装失败，检测到当前处理器为 ${Arch} 架构无法保证 100% 安装成功，自行查看 pip 报错原因 ----------\033[0m\n"
+        else
+            echo -e "\n\033[33m---------- 未识别的架构：${Arch} ----------\033[0m\n"
         fi
         echo -e ''
     else
