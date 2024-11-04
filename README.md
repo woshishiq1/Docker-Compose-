@@ -95,7 +95,7 @@
 
 - `GNU/Linux` 一键更换国内软件源脚本
 
-      bash <(curl -sSL https://raw.githubusercontent.com/279437541/Docker-Compose-/main/ChangeMirrors.sh)
+      bash <(curl -sSL https://raw.githubusercontent.com/woshishiq1/Docker-Compose-/main/ChangeMirrors.sh)
 > __注意：__
 > - _Debian 系 Linux 默认注释了源码仓库和预发布软件源，若需启用可将 list 源文件中相关内容的所在行 `取消注释`。_
 > - _RedHat 系 Linux 配置了所有可以配置的仓库，但有一些仓库默认没有启用，若需启用可将 repo 源文件中的 `enabled=0`修改成 `enabled=1`。_
@@ -105,7 +105,7 @@
 ### 其它脚本
 - `Docker` 一键安装脚本
 
-      bash <(curl -sSL https://raw.githubusercontent.com/279437541/Docker-Compose-/main/DockerInstallation.sh)
+      bash <(curl -sSL https://raw.githubusercontent.com/woshishiq1/Docker-Compose-/main/DockerInstallation.sh)
 
 > `Docker CE`：Docker Community Edition 镜像仓库，用于下载并安装 Docker 相关软件包。\
 > `Docker Hub`：Docker Hub 镜像仓库，默认为官方提供的公共库，用于切换下载镜像时的来源仓库，简称镜像加速器。
